@@ -9,14 +9,16 @@ from subprocess import check_call
 def star_genome_generate(genome_fasta_file, sjdb_gtf_file, genome_dir, run_thread_n=8):
     """Run STAR to generate genome index"""
 
-    check_call([
+    args = [
         "STAR",
         "--runMode", "genomeGenerate",
         "--runThreadN", str(run_thread_n),
         "--genomeDir", genome_dir,
         "--genomeFastaFiles", genome_fasta_file,
         "--sjdbGTFfile", sjdb_gtf_file,
-    ])
+    ]
+    print(" ".join(args))
+    check_call(args)
 
 
 def star_align_reads(read_files, out_prefix, run_thread_n=8):
@@ -26,7 +28,7 @@ def star_align_reads(read_files, out_prefix, run_thread_n=8):
         assert isinstance(read_files, str)
         read_files = [read_files]
 
-    check_call([
+    args = [
         "STAR",
         "--runMode", "alignReads",
         "--runThreadN", str(run_thread_n),
@@ -41,4 +43,6 @@ def star_align_reads(read_files, out_prefix, run_thread_n=8):
         "--alignIntronMax", "1000000",
         "--quantMode", "TranscriptomeSAM",
         "--outFileNamePrefix", out_prefix,
-    ])
+    ]
+    print(" ".join(args))
+    check_call(args)
