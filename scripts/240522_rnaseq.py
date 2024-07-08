@@ -6,12 +6,14 @@ import pandas as pd
 sys.path.append(".")  # noqa
 from seolab.tools.fastqc import fastqc
 from seolab.tools.sratoolkit import fastq_dump
+from seolab.tools.star import star_align_reads, star_genome_generate
 from seolab.utils import update_environ_path
 from seolab.utils.fileio import read_tsv, to_tsv
 
 HOME_DIR = os.path.expanduser("~")
 OPT_ROOT = os.path.join(HOME_DIR, "opt")
 GEO_ROOT = f"{HOME_DIR}/data/ncbi/geo"
+ENSEMBL_ROOT = f"{HOME_DIR}/data/ensembl"
 
 
 def create_metadata():
@@ -110,12 +112,37 @@ def check_quality_reads():
                 fastqc(fastq_file)
 
 
+def generate_genome_index():
+    """Generate genome index by STAR"""
+    activate_environment()
+    release_dir = os.path.join(ENSEMBL_ROOT, "release-112")
+    genome_fasta_file = os.path.join(release_dir, "Homo_sapiens.GRCh38.dna.primary_assembly.fa")
+    sjdb_gtf_file = os.path.join(release_dir, "Homo_sapiens.GRCh38.112.chr.gtf")
+    genome_dir = os.path.join(release_dir, "Homo_sapiens.GRCh38.star")
+    star_genome_generate(genome_fasta_file, sjdb_gtf_file, genome_dir)
+
+
+def align_reads():
+    """Align sequenced reads by STAR"""
+    activate_environment()
+    for geo_series_id in ("GSE255410", "GSE255412"):
+        df = load_metadata(geo_series_id)
+        for row in df.itertuples():
+            sample_dir = os.path.join(GEO_ROOT, geo_series_id, row.geo_sample_id)
+            read_files = [os.path.join(sample_dir, f"{row.sra_run_id}{suffix}.fastq") for suffix in ("_1", "_2")]
+            out_prefix = os.path.join(sample_dir, "star")
+            star_align_reads(read_files, out_prefix)
+
+
 def main():
     """python3 scripts/240522_rnaseq.py"""
 
     # create_metadata()  # Create metadata of samples
     # download_reads()  # Download sequenced reads
     # check_quality_reads()  # Check quality of reads by FastQC
+
+    # generate_genome_index()  # Generate genome index by STAR
+    # align_reads()  # Align sequenced reads by STAR
 
 
 if __name__ == '__main__':
