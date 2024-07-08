@@ -1,28 +1,5 @@
 #!/bin/bash
 
-## --- Section 1: Installation ---
-
-# Download pre-compiled SRA toolkit from NCBI
-cd ~/opt
-wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/3.1.0/sratoolkit.3.1.0-ubuntu64.tar.gz
-tar -zxvf sratoolkit.3.1.0-ubuntu64.tar.gz
-cd sratoolkit.3.1.0-ubuntu64/bin
-
-# Install java runtime environment (JRE) if not exists
-sudo apt install default-jre
-java -version
-
-# Download and uncompress FastQC application
-wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.12.1.zip
-unzip fastqc_v0.12.1.zip
-
-# Install and compile STAR from source
-wget https://github.com/alexdobin/STAR/archive/2.7.11b.tar.gz
-tar -xzf 2.7.11b.tar.gz
-cd STAR-2.7.11b
-cd STAR/source
-make STAR
-
 # Append paths to the analysis tools into PATH
 PATH=$PATH:/home/sukjun/opt/sratoolkit.3.1.0-ubuntu64/bin  # sratoolkit
 PATH=$PATH:/home/sukjun/opt/fastqc-v0.12.1  # FastQC
