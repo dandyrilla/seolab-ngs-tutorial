@@ -11,8 +11,8 @@ from seolab.tools.star import star_align_reads, star_genome_generate
 from seolab.utils import update_environ_path
 from seolab.utils.fileio import read_tsv, to_tsv
 
-GEO_ROOT = os.path.join(Config.DATA_ROOT, "ncbi", "geo")
-ENSEMBL_ROOT = os.path.join(Config.DATA_ROOT, "ensembl")
+GEO_ROOT = os.path.join(Config.DATA_ROOT, "ncbi", "geo")  # ~/data/ncbi/geo
+ENSEMBL_ROOT = os.path.join(Config.DATA_ROOT, "ensembl")  # ~/data/ensembl
 
 
 def create_metadata():
