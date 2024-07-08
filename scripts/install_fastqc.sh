@@ -3,8 +3,7 @@
 opt_root=$HOME/opt
 
 # Create a directory
-mkdir -p ${opt_root}
-cd ${opt_root}
+mkdir -p ${opt_root} && cd ${opt_root}
 
 # Install java runtime environment (JRE) if not exists
 sudo apt install default-jre
