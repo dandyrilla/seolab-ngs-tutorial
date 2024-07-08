@@ -130,7 +130,7 @@ def align_reads():
         for row in df.itertuples():
             sample_dir = os.path.join(GEO_ROOT, geo_series_id, row.geo_sample_id)
             read_files = [os.path.join(sample_dir, f"{row.sra_run_id}{suffix}.fastq") for suffix in ("_1", "_2")]
-            out_prefix = os.path.join(sample_dir, "star")
+            out_prefix = os.path.join(sample_dir, "star") + "/"
             star_align_reads(read_files, out_prefix)
 
 
