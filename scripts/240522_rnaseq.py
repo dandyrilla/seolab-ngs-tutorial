@@ -4,16 +4,15 @@ import sys
 import pandas as pd
 
 sys.path.append(".")  # noqa
+from seolab.config import Config
 from seolab.tools.fastqc import fastqc
 from seolab.tools.sratoolkit import fastq_dump
 from seolab.tools.star import star_align_reads, star_genome_generate
 from seolab.utils import update_environ_path
 from seolab.utils.fileio import read_tsv, to_tsv
 
-HOME_DIR = os.path.expanduser("~")
-OPT_ROOT = os.path.join(HOME_DIR, "opt")
-GEO_ROOT = f"{HOME_DIR}/data/ncbi/geo"
-ENSEMBL_ROOT = f"{HOME_DIR}/data/ensembl"
+GEO_ROOT = os.path.join(Config.DATA_ROOT, "ncbi", "geo")  # ~/data/ncbi/geo
+ENSEMBL_ROOT = os.path.join(Config.DATA_ROOT, "ensembl")  # ~/data/ensembl
 
 
 def create_metadata():
@@ -73,12 +72,12 @@ def activate_environment():
     """Activate analysis environment by updating PATH variable"""
 
     paths = [
-        f"{OPT_ROOT}/sratoolkit.3.1.0-ubuntu64/bin",  # SRAtoolkit (3.1.0)
-        f"{OPT_ROOT}/fastqc-v0.12.1",  # FastQC (0.12.1)
-        f"{OPT_ROOT}/STAR_2.7.10b/Linux_x86_64_static",  # STAR aligner (2.7.10b)
-        f"{OPT_ROOT}/samtools-1.20",  # samtools (1.20)
-        f"{OPT_ROOT}/gffread-0.12.7.Linux_x86_64",  # gffread (0.12.7)
-        f"{OPT_ROOT}/salmon-1.10.0/bin",  # salmon (1.10.0)
+        f"{Config.OPT_ROOT}/sratoolkit.3.1.0-ubuntu64/bin",  # SRAtoolkit (3.1.0)
+        f"{Config.OPT_ROOT}/fastqc-v0.12.1",  # FastQC (0.12.1)
+        f"{Config.OPT_ROOT}/STAR_2.7.10b/Linux_x86_64_static",  # STAR aligner (2.7.10b)
+        f"{Config.OPT_ROOT}/samtools-1.20",  # samtools (1.20)
+        f"{Config.OPT_ROOT}/gffread-0.12.7.Linux_x86_64",  # gffread (0.12.7)
+        f"{Config.OPT_ROOT}/salmon-1.10.0/bin",  # salmon (1.10.0)
     ]
     update_environ_path(paths, append=False)
 
