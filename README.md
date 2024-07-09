@@ -1,6 +1,6 @@
 # seolab-ngs-tutorial
 
-In this tutorial, you will learn RNA-seq, ATAC-seq, and single-cell RNA-seq analysis methods using the following samples.
+In this tutorial, we will learn RNA-seq, ATAC-seq, and single-cell RNA-seq analysis methods using the following samples.
 
 ## Bulk RNA-seq
 
