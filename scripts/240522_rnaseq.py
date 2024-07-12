@@ -85,7 +85,6 @@ def activate_environment():
 def download_reads():
     """Download sequenced reads"""
 
-    activate_environment()
     for geo_series_id in ("GSE255410", "GSE255412"):
         df = load_metadata(geo_series_id)
         for row in df.itertuples():
@@ -100,8 +99,6 @@ def download_reads():
 def check_quality_reads():
     """Check quality of reads by FastQC"""
 
-    activate_environment()
-
     for geo_series_id in ("GSE255410", "GSE255412"):
         df = load_metadata(geo_series_id)
         for row in df.itertuples():
@@ -113,7 +110,7 @@ def check_quality_reads():
 
 def generate_genome_index():
     """Generate genome index by STAR"""
-    activate_environment()
+
     release_dir = os.path.join(ENSEMBL_ROOT, "release-112")
     genome_fasta_file = os.path.join(release_dir, "Homo_sapiens.GRCh38.dna.primary_assembly.fa")
     sjdb_gtf_file = os.path.join(release_dir, "Homo_sapiens.GRCh38.112.chr.gtf")
@@ -123,7 +120,7 @@ def generate_genome_index():
 
 def align_reads():
     """Align sequenced reads by STAR"""
-    activate_environment()
+
     for geo_series_id in ("GSE255410", "GSE255412"):
         df = load_metadata(geo_series_id)
         for row in df.itertuples():
@@ -145,4 +142,5 @@ def main():
 
 
 if __name__ == '__main__':
+    activate_environment()
     main()
